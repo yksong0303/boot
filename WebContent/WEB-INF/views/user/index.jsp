@@ -5,11 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<jsp:include page="/WEB-INF/views/common/head.jsp"></jsp:include>
-</head>
+<jsp:include page="/WEB-INF/views/common/head.jsp"/>
+</head> 
 <body>
 <nav class="navbar navbar-expand-sm bg-light">
-	<ul class="navbar-nav">
+	<ui class="navbar-nav">
 		<li class="nav-item">
 			<a href="" class="nav-link">메뉴1</a>
 		</li>
@@ -22,15 +22,7 @@
 		<li class="nav-item">
 			<a href="" class="nav-link">메뉴4</a>
 		</li>
-	</ul>
+	</ui>
 </nav>
-<div class="container">
-	${sessionScope.user.ui_name}님 반갑습니다.
-</div>
 </body>
 </html>
-
-
-
-
-

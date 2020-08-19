@@ -7,6 +7,15 @@
 <title>Insert title here</title>
 </head>
 <body>
-나와 좀 ㅅㅂ
+<script>
+var h = {
+		name : '동동',
+		age : 22
+}
+h = JSON.stringify(h);
+h = JSON.parse(h);
+alert(h.name);
+</script>
+나나~~
 </body>
 </html>

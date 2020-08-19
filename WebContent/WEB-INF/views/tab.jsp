@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<jsp:include page="/WEB-INF/views/common/head.jsp" />
+<jsp:include page="/WEB-INF/views/common/head.jsp"></jsp:include>
 </head>
 <body>
 <ul class="nav nav-tabs">
@@ -20,9 +20,18 @@
 	</li>
 </ul>
 <div class="tab-content">
-	<div class="tab-pane container" id="t1"> 난 TAP1의 내용임 </div>
-	<div class="tab-pane container" id="t2"> 난 TAP2의 내용임 </div>
-	<div class="tab-pane container" id="t3"> 난 TAP3의 내용임 </div>
+	<div class="tab-pane container active" id="t1">난 TAB1내용임</div>
+	<div class="tab-pane container" id="t2">난 TAB2내용임</div>
+	<div class="tab-pane container" id="t3">난 TAB3내용임</div>
 </div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
