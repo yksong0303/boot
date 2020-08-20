@@ -68,7 +68,7 @@
                      Or Sign Up Using
                   </span>
 
-                  <a href="#" class="txt2" onclick="doSignUp()">
+                  <a href="/views/signup" class="txt2">
                      Sign Up
                   </a>
                </div>
@@ -104,25 +104,7 @@ function doLogin(){
    });
 }
 
-function doSignUp(){
-	   var ui_id = $('#ui_id').val();
-	   var ui_password = $('#ui_password').val();
-	   var cmd = 'login';
-	   var param = {
-	         ui_id : ui_id,
-	         ui_password : ui_password,
-	      cmd : cmd
-	   }
-	   $.ajax({
-	      method : 'POST',
-	      url : '/ajax/user',
-	      data : JSON.stringify(param),
-	      contentType:'application/json',
-	      success : function(res){
-	            location.href= "/views/SignUp";
-	      }
-	   });
-	}
+
 </script>   
 </body>
 </html>

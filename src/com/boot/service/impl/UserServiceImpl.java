@@ -11,27 +11,40 @@ import com.boot.servlet.InitServlet;
 import com.boot.vo.UserInfoVO;
 
 public class UserServiceImpl implements UserService {
-	private UserDAO udao = new UserDAOImpl();
+private UserDAO udao = new UserDAOImpl();
+	
+	@Override
 	public int insertUser(UserInfoVO user) {
-		// TODO Auto-generated method stub
-		return 0;
+		if(udao.selectUserById(user.getUiId())!=null) {
+			return -1;
+		}
+		return udao.insertUser(user);
 	}
 
+	@Override
 	public int deleteUser(UserInfoVO user) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	@Override
 	public int updateUser(UserInfoVO user) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	@Override
 	public UserInfoVO selectUser(UserInfoVO user) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	public UserInfoVO selectUserForLogin(UserInfoVO user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public List<UserInfoVO> selectUserList(UserInfoVO user) {
 		// TODO Auto-generated method stub
 		return null;
@@ -41,21 +54,18 @@ public class UserServiceImpl implements UserService {
 	public boolean doLogin(UserInfoVO user, HttpSession hs) {
 		user = udao.selectUserForLogin(user);
 		if(user!=null) {
-			hs.setAttribute("user",user);
+			hs.setAttribute("user", user);
 			return true;
 		}
 		return false;
 	}
-	public static void main(String[] args) {
-		InitServlet is = new InitServlet();
-		is.init();
-		UserService usSer = new UserServiceImpl();
-		UserInfoVO user = new UserInfoVO();
-		user.setUi_id("test");
-		user.setUi_password("test");
-		boolean isLogin = usSer.doLogin(user,null);
-		System.out.println(isLogin);
+	@Override
+	public boolean checkUserId(String uiId) {
+		UserInfoVO user = udao.selectUserById(uiId);
+		if(user==null) {
+			return true;
+		}
+		return false;
 	}
-
 
 }

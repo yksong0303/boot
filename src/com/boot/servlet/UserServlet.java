@@ -19,35 +19,45 @@ import com.google.gson.Gson;
 
 @WebServlet("/ajax/user")
 public class UserServlet extends HttpServlet {
-	   private static final long serialVersionUID = 1L;
-	    private Gson gson = new Gson();   
-	    private UserService ub = new UserServiceImpl();
+	private static final long serialVersionUID = 1L;
+    private Gson gson = new Gson();   
+    private UserService userService = new UserServiceImpl();
 
-	   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	      String contentType = response.getContentType();
-	      response.getWriter().append("Served at: ").append(request.getContextPath()).append(contentType);
-	   }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String cmd = request.getParameter("cmd");
+		Map<String,Object> result = new HashMap<>();
+		if("checkID".equals(cmd)) {
+			String uiId = request.getParameter("uiId");
+			result.put("result", userService.checkUserId(uiId));
+		}
+		PrintWriter pw = response.getWriter();
+		pw.println(gson.toJson(result));
+	}
 
-	   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	         throws ServletException, IOException {
 	      BufferedReader br = request.getReader();
 	      String str;
 	      StringBuffer sb = new StringBuffer();
-	      while((str=br.readLine())!=null) {
+	      while ((str = br.readLine()) != null) {
 	         sb.append(str);
 	      }
-	      UserInfoVO user= gson.fromJson(sb.toString(), UserInfoVO.class);
-	      Map<String,Object> result = new HashMap<>();
-	      result.put("result", ub.doLogin(user, request.getSession()));
+	      UserInfoVO user = gson.fromJson(sb.toString(), UserInfoVO.class);
+	      Map<String, Object> result = new HashMap<>();
+	      if ("login".equals(user.getCmd())) {
+	         result.put("result", userService.doLogin(user, request.getSession()));
+	      } else if ("signup".equals(user.getCmd())) {
+	         result.put("result", userService.insertUser(user));
+	      }else if("logout".equals(user.getCmd())) {
+	    	  request.getSession().invalidate();
+	    	  result.put("result",true);
+	      }
 	      String json = gson.toJson(result);
 	      PrintWriter pw = response.getWriter();
 	      pw.println(json);
 	   }
 
-	}
-
-
-
-
+}
 
 
 
