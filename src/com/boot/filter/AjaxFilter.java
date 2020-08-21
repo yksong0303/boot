@@ -1,8 +1,6 @@
 package com.boot.filter;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
