@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UserInfoVO> selectUserList(UserInfoVO user) {
 		// TODO Auto-generated method stub
-		return null;
+		return udao.selectUserList(user);
 	}
 
 	@Override

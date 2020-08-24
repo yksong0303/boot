@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.jsp.jstl.sql.Result;
@@ -141,8 +142,39 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public List<UserInfoVO> selectUserList(UserInfoVO user) {
-		// TODO Auto-generated method stub
-		return null;
+		List<UserInfoVO> userList = new ArrayList<>();
+		String sql = "select ui_num, ui_name, ui_num,ui_age,ui_birth,ui_id,ui_password, ui_credat,ui_nickname,ui_email,UI_PHONE, ui_admin from user_info";
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			con=InitServlet.getConnection();
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			 while(rs.next()) {
+					UserInfoVO ui = new UserInfoVO();
+					ui.setUiNum(rs.getInt("ui_num"));
+					ui.setUiName(rs.getString("ui_name"));
+					ui.setUiAge(rs.getInt("ui_age"));
+					ui.setUiId(rs.getString("ui_id"));
+					ui.setUiBirth(rs.getString("ui_birth"));
+					ui.setUiPhone(rs.getString("ui_phone"));
+					ui.setUiNickname(rs.getString("ui_nickname"));
+					ui.setUiCredat(rs.getString("ui_credat"));
+					ui.setUiEmail(rs.getString("ui_email"));
+					ui.setUiPassword(rs.getString("ui_password"));
+					ui.setUiAdmin(rs.getString("ui_admin"));
+					userList.add(ui);
+					
+			 }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			InitServlet.close(rs, ps, con);
+		}
+		return userList;
 	}
 
 	@Override
