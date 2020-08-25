@@ -9,83 +9,86 @@
 </head>
 <body>
 <script>
-/* var tableInfo={
-		cols : ['uiNum','uiName,']
-}
-$(document).ready(function(){
+var func = function(){
+	document.querySelector('#deleteBtn').onclick = function(){
+		var uiNumObjs = document.querySelectorAll('[name=uiNum]:checked');
+		if(!uiNumObjs.length){
+			alert('선택을 하고 누르라고!');
+			return;
+		}
+		
+		var uiNums=[];
+		for(var i=0;i<uiNumObjs.length;i++){
+			uiNums.push(uiNumObjs[i].value);
+		}
+		var params = {
+			uiNums : uiNums,
+			cmd : 'deleteUsers'
+		}
+		$.ajax({
+			url : '/ajax/user',
+			method : 'POST',
+			data : JSON.stringify(params),
+			success : function(res){
+				if(res.result){
+					alert('삭제 완료');
+				}
+			}
+		})
+		
+	}
+	document.querySelector('#allCheck').onchange = function(){
+		$('[name=uiNum]').prop('checked',this.checked);
+	}
 	$.ajax({
 		url:'/ajax/user',
 		method:'GET',
 		data : {cmd:'list'},
 		success:function(res){
-			var html = '<table border="1">';
-			html += '<tr><th>이름</th><th>비번</th><th>아이디</th><th>생일</th><th>폰</th><th>별명</th><th>이메일</th><th>관리번호</th><th>나이</th></tr>';
+			var ths = document.querySelectorAll('th[data-col],th[data-pk]');
+			var html = '';
 			for(var i=0;i<res.list.length;i++){
 				var user = res.list[i];
-				html += '<tr><th>' + user.uiName +'</th>';
-				html += '<th>' + user.uiPassword +'</th>';
-				html += '<th>' + user.uiId +'</th>';
-				html += '<th>' + user.uiBirth +'</th>';
-				html += '<th>' + user.uiPhone +'</th>';
-				html += '<th>' + user.uiNickname +'</th>';
-				html += '<th>' + user.uiEmail +'</th>';
-				html += '<th>' + user.uiAdmin +'</th>';
-				html += '<th>' + user.uiAge +'</th></tr>';
-				
+				html += '<tr>';
+				for(var j=0;j<ths.length;j++){
+					var th = ths[j];
+					var col = th.getAttribute('data-col');
+					if(col){
+						html += '<td>' + user[col] + '</td>';
+					}else{
+						col = th.getAttribute('data-pk');
+						html += '<td><input type="checkbox" name="'+col +'" value="' + user[col] + '"></td>';
+					}
+				}
+				html += '</tr>';
 			}
-			html += '</table>';
-			$('#userListDiv').html(html);
+			$('#tBody').html(html);
 		}
 	})
-}) */
-var uiList=[
-	{uiName:user.uiName,uiPassword:user.uiPassword,uiId:user.uiId,uiBirth:user.uiBirth,uiPhone:user.uiPhone,uiNickname:user.uiNickname,uiEmail:user.uiEmail,uiAdmin:user.uiAdmin,uiAge:user.uiAge},
-];
-$.ajax({
-	url:'/ajax/user',
-	method:'GET',
-	data:{cmd:'list'},
 }
-	
-
-
-var loadData=function(){
-	$('th[data-col]').each(function(idx,th){
-		var userList = th.getAttribute('data-col');
-	})
-	var html='';
-	for(var i=0;i<uiList.length;i++){
-		var uiL = uiList[i];
-		html +='<th>';
-		$('th[data-col]').each(function(idx,th){
-			var col=th.getAttribute('data-col')
-			html+= '<td>'+uiL[userList]+'</td>';
-		})
-		html +='</tr>';
-	}
-	$('#dataBody').html(html);
-}
-$(document).ready(loadData);
-
-})
+$(document).ready(func);
 </script>
 <h3>유저리스트</h3>
-<div id="userListDiv"></div>
+<input type="text" data-type="text" id="in">
+<div id="userListDiv">
 	<table class="table table-bordered">
 		<tr>
-			<th data-col="uiName">이름</th>
-			<th data-col="uiPassword">비밀번호</th>
-			<th data-col="uiId">아이디</th>
-			<th data-col="uiBirth">생일</th>
-			<th data-col="uiPhone">폰</th>
-			<th data-col="uiNickname">닉네임</th>
-			<th data-col="uiEmail">이메일</th>
-			<th data-col="uiAdmin">관리번호</th>
+			<th data-pk="uiNum"><input type="checkbox" id="allCheck" ></th>
+			<th data-col="uiNum">번호</th>
 			<th data-col="uiAge">나이</th>
+			<th data-col="uiName">이름</th>
+			<th data-col="uiId">아이디</th>
+			<th data-col="uiBirth">생년월일</th>
+			<th data-col="uiEmail">이메일</th>
+			<th data-col="uiPhone">전번</th>
+			<th data-col="uiCredat">가입일</th>
+			<th data-col="uiNickname">별명</th>
+			<th data-col="uiAdmin">관리번호</th>
 		</tr>
-		<tbody id="dataBody"></tbody>
+		<tbody id="tBody">
+		</tbody>
 	</table>
-
-	
+	<button class="btn btn-primary" id="deleteBtn">유저삭제</button>
+</div>
 </body>
 </html>

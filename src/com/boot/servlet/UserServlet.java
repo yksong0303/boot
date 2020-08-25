@@ -30,7 +30,7 @@ public class UserServlet extends HttpServlet {
 			String uiId = request.getParameter("uiId");
 			result.put("result", userService.checkUserId(uiId));
 		}else if("list".equals(cmd)) {
-			result.put("list",userService.selectUserList(null));
+			result.put("list", userService.selectUserList(null));
 		}
 		PrintWriter pw = response.getWriter();
 		pw.println(gson.toJson(result));
@@ -44,6 +44,7 @@ public class UserServlet extends HttpServlet {
 			sb.append(str);
 		}
 		UserInfoVO user = gson.fromJson(sb.toString(), UserInfoVO.class);
+		System.out.println(user);
 		Map<String,Object> result = new HashMap<>();
 		
 		if("login".equals(user.getCmd())) {
@@ -57,8 +58,9 @@ public class UserServlet extends HttpServlet {
 			result.put("result", userService.updateUser(user, request.getSession()));
 		}else if("deleteAccount".equals(user.getCmd())) {
 			result.put("result", userService.deleteUser(user, request.getSession()));
+		}else if("deleteUsers".equals(user.getCmd())) {
+			result.put("result", userService.deleteUsers(user.getUiNums()));
 		}
-		
 		
 		String json = gson.toJson(result);
 		PrintWriter pw = response.getWriter();
@@ -66,10 +68,4 @@ public class UserServlet extends HttpServlet {
 	}
 
 }
-
-
-
-
-
-
 
