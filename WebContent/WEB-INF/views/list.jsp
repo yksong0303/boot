@@ -60,7 +60,7 @@ var func = function(){
 						html += '<td><input type="checkbox" name="'+col +'" value="' + user[col] + '"></td>';
 					}
 				}
-				html += '</tr>';
+				html += '</tr>';ㄱ
 			}
 			$('#tBody').html(html);
 		}

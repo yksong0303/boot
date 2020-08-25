@@ -44,7 +44,7 @@ public class UserServlet extends HttpServlet {
 			sb.append(str);
 		}
 		UserInfoVO user = gson.fromJson(sb.toString(), UserInfoVO.class);
-		System.out.println(user);
+		System.out.println(user); 
 		Map<String,Object> result = new HashMap<>();
 		
 		if("login".equals(user.getCmd())) {

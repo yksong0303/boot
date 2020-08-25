@@ -20,35 +20,36 @@ var corList=[
 	{corNo:8,corArea:'부산',corSum:262,corNew:3},
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
 ];
+
 var loadData=function(){
-	var html = '';
+	var html='';
 	var corSumTotal=0;
 	var corNewTotal=0;
 	for(var i=0;i<corList.length;i++){
-		var cor=corList[i];
+		var cols=corList[i];
 		html+='<tr>';
 		
 		$('th[data-col]').each(function(idx,th){
 			var col=th.getAttribute('data-col');
-			html+='<td>'+cor[col]+'</td>';
+			html+= '<td>'+(cols[col]?cols[col]:'-')+'</td>';
 			if(col=='corSum'){
-				corSumTotal+=cor[col];
+				corSumTotal+=cols[col];
 			}else if(col=='corNew'){
-				corNewTotal+=cor[col];
+				corNewTotal+=cols[col];
 			}
-			
 		})
-		html+='</tr>';
-		
+		html+= '</tr>';
 	}
 	html+='<tr><td colspan="2" align="center">합계</td>';
 	html+='<td>'+corSumTotal+'</td>';
 	html+='<td>'+corNewTotal+'</td></tr>';
+	
 	$('#dataBody').html(html);
+	
+	
 }
 $(document).ready(loadData);
 </script>
-
 <table class="table table-bordered">
 	<tr>
 		<th data-col="corNo">지역번호</th>
