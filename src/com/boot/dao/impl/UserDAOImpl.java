@@ -79,7 +79,7 @@ public class UserDAOImpl implements UserDAO {
 				"ui_phone = ?,\r\n" + 
 				"ui_email = ?,\r\n" + 
 				"UI_NICKNAME = ?\r\n" + 
-				"where ui_num=?";
+				"where ui_num=?"; 
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
